@@ -41,6 +41,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!-- tag::wsdl[] -->
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
@@ -62,6 +63,7 @@
 					</schemas>                                                                                      						
 				</configuration>
             </plugin>
+            <!-- end::wsdl[] -->
         </plugins>
     </build>
     

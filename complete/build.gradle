@@ -22,6 +22,7 @@ repositories {
     maven { url 'http://repo.spring.io/libs-snapshot' }
 }
 
+// tag::wsdl[]
 task genJaxb {
 	ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
 	ext.classesDir = "${buildDir}/classes/jaxb"
@@ -58,6 +59,7 @@ task genJaxb {
 		}
 	}
 }
+// end::wsdl[]
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter")
