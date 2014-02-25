@@ -2,15 +2,24 @@ configurations {
 	jaxb
 }
 
-ext.springVersion =       '3.2.4.RELEASE'
-ext.springWsVersion =  	  '2.1.4.RELEASE'
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-snapshot" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC3")
+    }
+}
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'spring-boot'
 
 repositories {
-    maven { url 'http://repo.spring.io/libs-release' }
+    mavenCentral()
+    maven { url 'http://repo.spring.io/libs-snapshot' }
 }
 
 task genJaxb {
@@ -51,13 +60,13 @@ task genJaxb {
 }
 
 dependencies {
-	compile("org.springframework.ws:spring-ws-core:$springWsVersion")
+    compile("org.springframework.boot:spring-boot-starter")
+	compile("org.springframework.ws:spring-ws-core:2.1.4.RELEASE")
 	compile(files(genJaxb.classesDir).builtBy(genJaxb))
-	
-	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"	
+
+	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
 }
 
-task runClient(dependsOn: 'classes', type:JavaExec) {
-	main = "hello.WeatherClient"
-	classpath = sourceSets.main.runtimeClasspath
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
 }
