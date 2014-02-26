@@ -1,3 +1,4 @@
+
 package hello;
 
 import java.text.SimpleDateFormat;
@@ -43,7 +44,8 @@ public class WeatherClient extends WebServiceGatewaySupport {
 				System.out.print(forecast.getDesciption());
 				System.out.print(" ");
 				Temp temperature = forecast.getTemperatures();
-				System.out.print(temperature.getMorningLow() + "\u00b0-" + temperature.getDaytimeHigh() + "\u00b0 ");
+				System.out.print(temperature.getMorningLow() + "\u00b0-"
+						+ temperature.getDaytimeHigh() + "\u00b0 ");
 				System.out.println();
 			}
 		} else {
