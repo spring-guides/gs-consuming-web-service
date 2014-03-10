@@ -55,14 +55,14 @@ include::https://raw.github.com/spring-guides/getting-started-macros/master/spri
 
 The interface to a SOAP-based web service is captured in a http://en.wikipedia.org/wiki/Web_Services_Description_Language[WSDL]. JAX-B2 provides an easy means to generate Java domain objects using this XML specification.
 
-To generate a batch of Java domain objects with maven, we need the following plugin setup:
+To generate a batch of Java domain objects with maven, you need the following plugin setup:
 
 [source,xml,indent=0]
 ----
 include::complete/pom.xml[tags=wsdl]
 ----
 
-It sets the target package for each generated class will be `hello.wsdl`. It also points at the weather site's WSDL contract.
+It sets the target package for each generated class as `hello.wsdl`. It also points at the weather site's WSDL contract.
 
 To do the same with gradle, you can see this in the build file:
 
@@ -73,7 +73,7 @@ include::complete/build.gradle[tags=wsdl]
 
 In gradle, it's a bit more complex because it invokes an ant library to do the processing.
 
-In both cases, the JAX-B domain object generation process has been wired into the build tool's lifecycle.
+In both cases, the JAX-B2 domain object generation process has been wired into the build tool's lifecycle so there are no extra steps to run.
 
 == Create a weather service client
 
