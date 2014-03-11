@@ -10,17 +10,14 @@ projects: [spring-ws]
 :icons: font
 :source-highlighter: prettify
 
-This guide walks you through the process of creating a "hello world" link:/understanding/SOAP[SOAP-based web service] with Spring.
+This guide walks you through the process of consuming a link:/understanding/SOAP[SOAP-based web service] with Spring.
 
 == What you'll build
 
-You'll build a client that can fetch data from a remote, WSDL-based web service using the http://en.wikipedia.org/wiki/SOAP[SOAP protocol].
+You will build a client that fetches weather data from a remote, WSDL-based web service using http://en.wikipedia.org/wiki/SOAP[SOAP].
+You can find out more about the weather service at http://wiki.cdyne.com/index.php/CDYNE_Weather
 
-----
-http://wsf.cdyne.com/WeatherWS/Weather.asmx
-----
-
-The service provides weather forecasts and you'll be able to insert your own zip code.
+The service provides weather forecasts based on a zipcode. You will be able to use your own zip code.
 
 
 == What you'll need
@@ -53,41 +50,46 @@ include::https://raw.github.com/spring-guides/getting-started-macros/master/spri
 [[initial]]
 == Generate domain objects based on a WSDL
 
-The interface to a SOAP-based web service is captured in a http://en.wikipedia.org/wiki/Web_Services_Description_Language[WSDL]. JAX-B2 provides an easy means to generate Java domain objects using this XML specification.
+The interface to a SOAP web service is captured in a http://en.wikipedia.org/wiki/Web_Services_Description_Language[WSDL]. JAXB provides an easy means to generate Java classes from a WSDL (or rather: the XSD contained in the `<Types/>` section of the WSDL).
+The WSDL for the weather service can be found at http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl.
 
-To generate a batch of Java domain objects with maven, you need the following plugin setup:
+To generate Java classes from the WSDL in maven, you need the following plugin setup:
 
 [source,xml,indent=0]
 ----
 include::complete/pom.xml[tags=wsdl]
 ----
 
-It sets the target package for each generated class as `hello.wsdl`. It also points at the weather site's WSDL contract.
+This setup will generate classes for the WSDL found at the specified URL, putting those classes in the `hello.wsdl` package.
 
-To do the same with gradle, you can see this in the build file:
+To do the same with gradle, you will need the following in your build file:
 
 [source,java,indent=0]
 ----
 include::complete/build.gradle[tags=wsdl]
 ----
 
-In gradle, it's a bit more complex because it invokes an ant library to do the processing.
+As gradle does not have a JAXB plugin (yet), it involves a ant task, which makes it a bit more complex than in maven.
 
-In both cases, the JAX-B2 domain object generation process has been wired into the build tool's lifecycle so there are no extra steps to run.
+In both cases, the JAXB domain object generation process has been wired into the build tool's lifecycle so there are no extra steps to run.
 
 == Create a weather service client
 
 To create a web service client, you simply have to extend the http://docs.spring.io/spring-ws/sites/2.0/apidocs/org/springframework/ws/client/core/support/WebServiceGatewaySupport.html[WebServiceGatewaySupport] class and code your operations:
 
-`src/main/java/hello/GreetingController.java`
+`src/main/java/hello/WeatherClient.java`
 [source,java]
 ----
 include::complete/src/main/java/hello/WeatherClient.java[]
 ----
 
-In this example, it creates a new request object, `GetCityForecastByZIP`. It then invokes the inherited `WebServiceTemplate` to fire off it's request.
+The client contains two methods: `getCityForecastByZip` which does the actual SOAP exchange, and `printResponse` which prints the received response. We will focus on the former method.
 
-There is a second method use to print the results to the console.
+In this method, both the `GetCityForecastByZIP` and the `GetCityForecastByZIPResponse` classes are derived from the WSDL and were generated in the JAXB generation process described in the previous step.
+It creates the `GetCityForecastByZIP` request object and set it with the `zipCode` parameter.
+After printing out the zip code, it uses the http://docs.spring.io/spring-ws/sites/2.0/apidocs/org/springframework/ws/client/core/WebServiceTemplate.html[WebServiceTemplate] supplied by the `WebServiceGatewaySupport` base class to do the actual SOAP exchange.
+It passes the `GetCityForecastByZIP` request object, as well as a `SoapActionCallback` to pass on a http://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528[SOAPAction] header with the request, as the WSDL described that it needed this header in the `<soap:operation/>` elements.
+It casts the response into a `GetCityForecastByZIPResponse` object, which is then returned.
 
 == Configuring web service components
 
