@@ -1,5 +1,5 @@
 configurations {
-	jaxb
+    jaxb
 }
 
 buildscript {
@@ -22,49 +22,51 @@ repositories {
     maven { url 'http://repo.spring.io/libs-snapshot' }
 }
 
+// tag::wsdl[]
 task genJaxb {
-	ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
-	ext.classesDir = "${buildDir}/classes/jaxb"
-	ext.schema = "http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl"
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    ext.classesDir = "${buildDir}/classes/jaxb"
+    ext.schema = "http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl"
 
-	outputs.dir classesDir
+    outputs.dir classesDir
 
-	doLast() {
-		project.ant {
-			taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
-					classpath: configurations.jaxb.asPath
-			mkdir(dir: sourcesDir)
-			mkdir(dir: classesDir)
+    doLast() {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+                    classpath: configurations.jaxb.asPath
+            mkdir(dir: sourcesDir)
+            mkdir(dir: classesDir)
 
-			xjc(destdir: sourcesDir, schema: schema,
-					package: "hello.wsdl") {
-				arg(value: "-wsdl")
-				produces(dir: sourcesDir, includes: "**/*.java")
-			}
+            xjc(destdir: sourcesDir, schema: schema,
+                    package: "hello.wsdl") {
+                arg(value: "-wsdl")
+                produces(dir: sourcesDir, includes: "**/*.java")
+            }
 
-			javac(destdir: classesDir, source: 1.6, target: 1.6, debug: true,
-					debugLevel: "lines,vars,source",
-					classpath: configurations.jaxb.asPath) {
-				src(path: sourcesDir)
-				include(name: "**/*.java")
-				include(name: "*.java")
-			}
+            javac(destdir: classesDir, source: 1.6, target: 1.6, debug: true,
+                    debugLevel: "lines,vars,source",
+                    classpath: configurations.jaxb.asPath) {
+                src(path: sourcesDir)
+                include(name: "**/*.java")
+                include(name: "*.java")
+            }
 
-			copy(todir: classesDir) {
-				fileset(dir: sourcesDir, erroronmissingdir: false) {
-					exclude(name: "**/*.java")
-				}
-			}
-		}
-	}
+            copy(todir: classesDir) {
+                fileset(dir: sourcesDir, erroronmissingdir: false) {
+                    exclude(name: "**/*.java")
+                }
+            }
+        }
+    }
 }
+// end::wsdl[]
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter")
-	compile("org.springframework.ws:spring-ws-core:2.1.4.RELEASE")
-	compile(files(genJaxb.classesDir).builtBy(genJaxb))
+    compile("org.springframework.ws:spring-ws-core:2.1.4.RELEASE")
+    compile(files(genJaxb.classesDir).builtBy(genJaxb))
 
-	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+    jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
 }
 
 jar {
