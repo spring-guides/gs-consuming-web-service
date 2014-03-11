@@ -69,6 +69,10 @@ dependencies {
     jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
 }
 
+jar {
+	from genJaxb.classesDir
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
 }
