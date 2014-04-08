@@ -76,3 +76,7 @@ jar {
 task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
 }
+
+task afterEclipseImport {
+    dependsOn genJaxb
+}
