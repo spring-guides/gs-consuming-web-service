@@ -63,7 +63,7 @@ task genJaxb {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter")
-    compile("org.springframework.ws:spring-ws-core:2.1.4.RELEASE")
+    compile("org.springframework.ws:spring-ws-core:2.2.0.RC1")
     compile(files(genJaxb.classesDir).builtBy(genJaxb))
 
     jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
