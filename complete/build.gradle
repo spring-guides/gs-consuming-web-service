@@ -4,7 +4,7 @@ configurations {
 
 buildscript {
     repositories {
-        maven { url "http://repo.spring.io/libs-snapshot" }
+        maven { url "http://repo.spring.io/libs-release" }
         mavenLocal()
     }
     dependencies {
@@ -19,7 +19,7 @@ apply plugin: 'spring-boot'
 
 repositories {
     mavenCentral()
-    maven { url 'http://repo.spring.io/libs-snapshot' }
+    maven { url 'http://repo.spring.io/libs-release' }
 }
 
 // tag::wsdl[]
@@ -63,7 +63,7 @@ task genJaxb {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter")
-    compile("org.springframework.ws:spring-ws-core:2.2.0.RC1")
+    compile("org.springframework.ws:spring-ws-core:2.2.0.RELEASE")
     compile(files(genJaxb.classesDir).builtBy(genJaxb))
 
     jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
