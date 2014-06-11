@@ -4,11 +4,12 @@ configurations {
 
 buildscript {
     repositories {
-        maven { url "http://repo.spring.io/libs-release" }
+        maven { url "http://repo.spring.io/release" }
         mavenLocal()
+        mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.2.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.0.RELEASE")
     }
 }
 
@@ -18,8 +19,9 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 repositories {
+    mavenLocal()
     mavenCentral()
-    maven { url 'http://repo.spring.io/libs-release' }
+    maven { url 'http://repo.spring.io/release' }
 }
 
 // tag::wsdl[]
@@ -62,8 +64,7 @@ task genJaxb {
 // end::wsdl[]
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter")
-    compile("org.springframework.ws:spring-ws-core:2.2.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-ws")
     compile(files(genJaxb.classesDir).builtBy(genJaxb))
 
     jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
