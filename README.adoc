@@ -46,7 +46,7 @@ include::initial/build.gradle[]
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/spring-boot-gradle-plugin.adoc[]
 
-NOTE: If you read link:/guides/gs/producing-web-service[Producing a Web Service], you might be wondering why this guide doesn't use *spring-boot-starter-ws*? That Spring Boot starter is
+NOTE: If you read link:/guides/gs/producing-web-service[Producing a SOAP Web Service], you might be wondering why this guide doesn't use *spring-boot-starter-ws*? That Spring Boot starter is
 only for server-side web services. That starter brings on board things like embedded Tomcat, which isn't need to make a web call.
 
 
