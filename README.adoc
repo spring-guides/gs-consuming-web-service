@@ -107,7 +107,7 @@ This application is packaged up to run from the console and retrieve a single we
 include::complete/src/main/java/hello/Application.java[]
 ----
 
-The `main()` method defers to the http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html[`SpringApplication`] helper class, providing `Application.class` as an argument to its `run()` method. This tells Spring to read the annotation metadata from `Application` and to manage it as a component in the link:/understanding/application-context[Spring application context].
+The `main()` method defers to the http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html[`SpringApplication`] helper class, providing `WeatherConfiguration.class` as an argument to its `run()` method. This tells Spring to read the annotation metadata from `WeatherConfiguration` and to manage it as a component in the link:/understanding/application-context[Spring application context].
 
 NOTE: This application is hard coded to look up zip code 94304, Palo Alto, CA. Towards the end of this guide, you'll see how to plug in a different zip code without editing the code.
 
