@@ -4,7 +4,7 @@ configurations {
 
 buildscript {
     repositories {
-        maven { url "http://repo.spring.io/libs-release" }
+        maven { url "https://repo.spring.io/libs-release" }
         mavenLocal()
         mavenCentral()
     }
@@ -21,7 +21,7 @@ apply plugin: 'spring-boot'
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url 'http://repo.spring.io/libs-release' }
+    maven { url 'https://repo.spring.io/libs-release' }
 }
 
 // tag::wsdl[]
