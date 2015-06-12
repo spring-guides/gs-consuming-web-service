@@ -59,6 +59,9 @@ task genJaxb {
 }
 // end::wsdl[]
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 dependencies {
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework.ws:spring-ws-core")

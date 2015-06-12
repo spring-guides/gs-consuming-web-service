@@ -22,6 +22,7 @@ The service provides weather forecasts based on a zipcode. You will be able to u
 
 == What you'll need
 
+:java_version: 1.8
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/prereq_editor_jdk_buildtools.adoc[]
 
 
