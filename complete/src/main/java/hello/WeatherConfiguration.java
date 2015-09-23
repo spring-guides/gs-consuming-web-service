@@ -18,7 +18,7 @@ public class WeatherConfiguration {
 	@Bean
 	public WeatherClient weatherClient(Jaxb2Marshaller marshaller) {
 		WeatherClient client = new WeatherClient();
-		client.setDefaultUri("http://wsf.cdyne.com/WeatherWS/Weather.asmx");
+		client.setDefaultUri("http://ws.cdyne.com/WeatherWS");
 		client.setMarshaller(marshaller);
 		client.setUnmarshaller(marshaller);
 		return client;

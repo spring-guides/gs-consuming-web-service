@@ -3,53 +3,55 @@ package hello;
 
 import java.text.SimpleDateFormat;
 
-import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
-import org.springframework.ws.soap.client.core.SoapActionCallback;
-
 import hello.wsdl.Forecast;
 import hello.wsdl.ForecastReturn;
 import hello.wsdl.GetCityForecastByZIP;
 import hello.wsdl.GetCityForecastByZIPResponse;
 import hello.wsdl.Temp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
+import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 public class WeatherClient extends WebServiceGatewaySupport {
 
+	private static final Logger log = LoggerFactory.getLogger(WeatherClient.class);
+
 	public GetCityForecastByZIPResponse getCityForecastByZip(String zipCode) {
+
 		GetCityForecastByZIP request = new GetCityForecastByZIP();
 		request.setZIP(zipCode);
 
-		System.out.println();
-		System.out.println("Requesting forecast for " + zipCode);
+		log.info("Requesting forecast for " + zipCode);
 
-		GetCityForecastByZIPResponse response = (GetCityForecastByZIPResponse) getWebServiceTemplate().marshalSendAndReceive(
-				request,
-				new SoapActionCallback(
-						"http://ws.cdyne.com/WeatherWS/GetCityForecastByZIP"));
+		GetCityForecastByZIPResponse response = (GetCityForecastByZIPResponse) getWebServiceTemplate()
+				.marshalSendAndReceive(
+						"http://wsf.cdyne.com/WeatherWS/Weather.asmx",
+						request,
+						new SoapActionCallback("http://ws.cdyne.com/WeatherWS/GetCityForecastByZIP"));
 
 		return response;
 	}
 
 	public void printResponse(GetCityForecastByZIPResponse response) {
+
 		ForecastReturn forecastReturn = response.getGetCityForecastByZIPResult();
 
 		if (forecastReturn.isSuccess()) {
-			System.out.println();
-			System.out.println("Forecast for " + forecastReturn.getCity() + ", "
-					+ forecastReturn.getState());
+			log.info("Forecast for " + forecastReturn.getCity() + ", " + forecastReturn.getState());
 
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			for (Forecast forecast : forecastReturn.getForecastResult().getForecast()) {
-				System.out.print(format.format(forecast.getDate().toGregorianCalendar().getTime()));
-				System.out.print(" ");
-				System.out.print(forecast.getDesciption());
-				System.out.print(" ");
+
 				Temp temperature = forecast.getTemperatures();
-				System.out.print(temperature.getMorningLow() + "\u00b0-"
-						+ temperature.getDaytimeHigh() + "\u00b0 ");
-				System.out.println();
+
+				log.info(String.format("%s %s %s°-%s°", format.format(forecast.getDate().toGregorianCalendar().getTime()),
+						forecast.getDesciption(), temperature.getMorningLow(), temperature.getDaytimeHigh()));
+				log.info("");
 			}
 		} else {
-			System.out.println("No forecast received");
+			log.info("No forecast received");
 		}
 	}
 
