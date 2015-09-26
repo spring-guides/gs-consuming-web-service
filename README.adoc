@@ -94,7 +94,7 @@ Spring WS uses Spring Framework's OXM module which has the `Jaxb2Marshaller` to 
 include::complete/src/main/java/hello/WeatherConfiguration.java[]
 ----
 
-The `marshaller` is pointed at the collection of generated domain objects and will use them to both serialize and deserialize between XML and POJOs.
+The `marshaller` is pointed at the collection of generated domain objects and will use them to both serialize and deserialize between XML and link:/understanding/POJO[POJOs].
 
 The `weatherClient` is created and configured with the URI of the weather service shown up above. It is also configured to use the JAXB marshaller.
 
