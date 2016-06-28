@@ -41,7 +41,7 @@ task genJaxb {
                 produces(dir: sourcesDir, includes: "**/*.java")
             }
 
-            javac(destdir: classesDir, source: 1.6, target: 1.6, debug: true,
+            javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
                     debugLevel: "lines,vars,source",
                     classpath: configurations.jaxb.asPath) {
                 src(path: sourcesDir)
@@ -71,7 +71,10 @@ dependencies {
 }
 
 jar {
-	from genJaxb.classesDir
+    baseName = 'gs-consuming-web-service'
+    version =  '0.1.0'
+
+    from genJaxb.classesDir
 }
 
 task wrapper(type: Wrapper) {

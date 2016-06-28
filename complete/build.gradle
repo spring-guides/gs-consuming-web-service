@@ -8,12 +8,9 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE")
-        classpath "io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE"
     }
 }
 
-// This wouldn't be needed with Spring Boot 1.3
-apply plugin: 'io.spring.dependency-management'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -44,7 +41,7 @@ task genJaxb {
                 produces(dir: sourcesDir, includes: "**/*.java")
             }
 
-            javac(destdir: classesDir, source: 1.6, target: 1.6, debug: true,
+            javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
                     debugLevel: "lines,vars,source",
                     classpath: configurations.jaxb.asPath) {
                 src(path: sourcesDir)
@@ -65,12 +62,6 @@ task genJaxb {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-dependencyManagement {
-     imports {
-          mavenBom 'org.springframework.boot:spring-boot-starter-parent:1.3.5.RELEASE'
-     }
-}
-
 dependencies {
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework.ws:spring-ws-core")
@@ -80,7 +71,10 @@ dependencies {
 }
 
 jar {
-	from genJaxb.classesDir
+    baseName = 'gs-consuming-web-service'
+    version =  '0.1.0'
+
+    from genJaxb.classesDir
 }
 
 task wrapper(type: Wrapper) {
