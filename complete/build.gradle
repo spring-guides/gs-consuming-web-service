@@ -77,9 +77,6 @@ jar {
     from genJaxb.classesDir
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
-}
 
 task afterEclipseImport {
     dependsOn genJaxb
