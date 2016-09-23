@@ -6,7 +6,7 @@ projects: [spring-ws]
 :toc:
 :project_id: gs-consuming-web-service
 :spring_version: current
-:spring_boot_version: 1.4.0.RELEASE
+:spring_boot_version: 1.4.1.RELEASE
 :icons: font
 :source-highlighter: prettify
 
