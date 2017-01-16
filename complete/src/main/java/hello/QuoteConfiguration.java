@@ -6,20 +6,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 @Configuration
-public class WeatherConfiguration {
+public class QuoteConfiguration {
 
 	@Bean
 	public Jaxb2Marshaller marshaller() {
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		// this package must match the package in the <generatePackage> specified in pom.xml
+		// this package must match the package in the <generatePackage> specified in
+		// pom.xml
 		marshaller.setContextPath("hello.wsdl");
 		return marshaller;
 	}
 
 	@Bean
-	public WeatherClient weatherClient(Jaxb2Marshaller marshaller) {
-		WeatherClient client = new WeatherClient();
-		client.setDefaultUri("http://ws.cdyne.com/WeatherWS");
+	public QuoteClient quoteClient(Jaxb2Marshaller marshaller) {
+		QuoteClient client = new QuoteClient();
+		client.setDefaultUri("http://www.webservicex.com/stockquote.asmx");
 		client.setMarshaller(marshaller);
 		client.setUnmarshaller(marshaller);
 		return client;

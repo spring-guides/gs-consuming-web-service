@@ -51,7 +51,7 @@
                     <generatePackage>hello.wsdl</generatePackage>
                     <schemas>
                         <schema>
-                            <url>http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl</url>
+                            <url>http://www.webservicex.com/stockquote.asmx?WSDL</url>
                         </schema>
                     </schemas>
                 </configuration>

@@ -1,12 +1,12 @@
 
 package hello;
 
-import hello.wsdl.GetCityForecastByZIPResponse;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import hello.wsdl.GetQuoteResponse;
 
 @SpringBootApplication
 public class Application {
@@ -16,14 +16,15 @@ public class Application {
 	}
 
 	@Bean
-	CommandLineRunner lookup(WeatherClient weatherClient) {
+	CommandLineRunner lookup(QuoteClient weatherClient) {
 		return args -> {
-			String zipCode = "94304";
+			String ticker = "MSFT";
 
 			if (args.length > 0) {
-				zipCode = args[0];
+				ticker = args[0];
 			}
-			GetCityForecastByZIPResponse response = weatherClient.getCityForecastByZip(zipCode);
+			GetQuoteResponse response = weatherClient.getQuote(ticker);
+			System.err.println(response.getGetQuoteResult());
 		};
 	}
 
