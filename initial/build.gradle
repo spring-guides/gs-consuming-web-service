@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.4.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.0.RELEASE")
     }
 }
 
@@ -24,7 +24,7 @@ repositories {
 task genJaxb {
     ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
     ext.classesDir = "${buildDir}/classes/jaxb"
-    ext.schema = "http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl"
+    ext.schema = "http://www.webservicex.com/stockquote.asmx?WSDL"
 
     outputs.dir classesDir
 
