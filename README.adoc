@@ -136,11 +136,13 @@ Requesting quote for ORCL
 
 == Summary
 
-Congratulations! You've just developed a client to consume a SOAP-based web service with Spring. 
+Congratulations! You've just developed a client to consume a SOAP-based web service with Spring.
 
+== See Also
 
+The following guides may also be helpful:
 
-
+* https://spring.io/guides/gs/producing-web-service/[Producing a SOAP web service]
+* https://spring.io/guides/gs/spring-boot/[Building an Application with Spring Boot]
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/footer.adoc[]
-
