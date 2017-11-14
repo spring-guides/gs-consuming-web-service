@@ -14,7 +14,7 @@ This guide walks you through the process of consuming a link:/understanding/SOAP
 
 == What you'll build
 
-You will build a client that fetches weather data from a remote, WSDL-based web service using http://en.wikipedia.org/wiki/SOAP[SOAP].
+You will build a client that fetches stock market quotes data from a remote, WSDL-based web service using http://en.wikipedia.org/wiki/SOAP[SOAP].
 You can find out more about the quote service at http://www.webservicex.com/stockquote.asmx?op=GetQuote.
 
 The service provides stock market quotes. You will be able to use your own ticker symbol.
@@ -66,7 +66,7 @@ As gradle does not have a JAXB plugin (yet), it involves an ant task, which make
 
 In both cases, the JAXB domain object generation process has been wired into the build tool's lifecycle so there are no extra steps to run.
 
-== Create a weather service client
+== Create a stock market quotes service client
 
 To create a web service client, you simply have to extend the http://docs.spring.io/spring-ws/sites/2.0/apidocs/org/springframework/ws/client/core/support/WebServiceGatewaySupport.html[WebServiceGatewaySupport] class and code your operations:
 
@@ -100,7 +100,7 @@ The `quoteClient` is created and configured with the URI of the weather service 
 
 == Make the application executable
 
-This application is packaged up to run from the console and retrieve a single weather forecast for a given zip code.
+This application is packaged up to run from the console and retrieve the stock value for a given symbol.
 
 `src/main/java/hello/Application.java`
 [source,java]
@@ -110,7 +110,7 @@ include::complete/src/main/java/hello/Application.java[]
 
 The `main()` method defers to the http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html[`SpringApplication`] helper class, providing `QuoteConfiguration.class` as an argument to its `run()` method. This tells Spring to read the annotation metadata from `QuoteConfiguration` and to manage it as a component in the link:/understanding/application-context[Spring application context].
 
-NOTE: This application is hard coded to look up zip code 94304, Palo Alto, CA. Towards the end of this guide, you'll see how to plug in a different zip code without editing the code.
+NOTE: This application is hard coded to look up symbol 'MSFT' which correspond to Microsoft Corporation. Towards the end of this guide, you'll see how to plug in a different symbol without editing the code.
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/build_an_executable_jar_subhead.adoc[]
 
