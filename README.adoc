@@ -1,7 +1,3 @@
----
-tags: [SOAP]
-projects: [spring-ws]
----
 :spring_version: current
 :toc:
 :project_id: gs-consuming-web-service
