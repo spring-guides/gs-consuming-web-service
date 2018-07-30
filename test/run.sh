@@ -2,7 +2,7 @@
 cd $(dirname $0)
 
 git clone https://github.com/spring-guides/gs-producing-web-service
-(cd gs-producing-web-service/complete; ./mvnw spring-boot:run &)
+(cd gs-producing-web-service/complete; ./mvnw install; ./mvnw spring-boot:run &)
 
 sleep 10
 
