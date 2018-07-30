@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 @Configuration
-public class QuoteConfiguration {
+public class CountryConfiguration {
 
 	@Bean
 	public Jaxb2Marshaller marshaller() {
@@ -18,9 +18,9 @@ public class QuoteConfiguration {
 	}
 
 	@Bean
-	public QuoteClient quoteClient(Jaxb2Marshaller marshaller) {
-		QuoteClient client = new QuoteClient();
-		client.setDefaultUri("http://www.webservicex.com/stockquote.asmx");
+	public CountryClient countryClient(Jaxb2Marshaller marshaller) {
+		CountryClient client = new CountryClient();
+		client.setDefaultUri("http://localhost:8080/ws");
 		client.setMarshaller(marshaller);
 		client.setUnmarshaller(marshaller);
 		return client;

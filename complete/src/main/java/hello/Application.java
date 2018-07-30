@@ -1,12 +1,12 @@
 
 package hello;
 
-import hello.wsdl.GetQuoteResponse;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import hello.wsdl.GetCountryResponse;
 
 @SpringBootApplication
 public class Application {
@@ -16,15 +16,15 @@ public class Application {
 	}
 
 	@Bean
-	CommandLineRunner lookup(QuoteClient quoteClient) {
+	CommandLineRunner lookup(CountryClient quoteClient) {
 		return args -> {
-			String ticker = "MSFT";
+			String country = "Spain";
 
 			if (args.length > 0) {
-				ticker = args[0];
+				country = args[0];
 			}
-			GetQuoteResponse response = quoteClient.getQuote(ticker);
-			System.err.println(response.getGetQuoteResult());
+			GetCountryResponse response = quoteClient.getCountry(country);
+			System.err.println(response.getCountry().getCurrency());
 		};
 	}
 

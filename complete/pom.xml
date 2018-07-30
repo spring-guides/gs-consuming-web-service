@@ -51,7 +51,7 @@
                     <generatePackage>hello.wsdl</generatePackage>
                     <schemas>
                         <schema>
-                            <url>http://www.webservicex.com/stockquote.asmx?WSDL</url>
+                            <url>http://localhost:8080/ws/countries.wsdl</url>
                         </schema>
                     </schemas>
                 </configuration>

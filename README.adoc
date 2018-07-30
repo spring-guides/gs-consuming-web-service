@@ -10,10 +10,10 @@ This guide walks you through the process of consuming a link:/understanding/SOAP
 
 == What you'll build
 
-You will build a client that fetches stock market quotes data from a remote, WSDL-based web service using http://en.wikipedia.org/wiki/SOAP[SOAP].
-You can find out more about the quote service at http://www.webservicex.com/stockquote.asmx?op=GetQuote.
+You will build a client that fetches country data data from a remote, WSDL-based web service using http://en.wikipedia.org/wiki/SOAP[SOAP].
+You can find out more about the country service, and run the service yourself by following https://spring.io/guides/gs/producing-web-service/[this guide].
 
-The service provides stock market quotes. You will be able to use your own ticker symbol.
+The service provides country data. You will be able to query data about a country based on its name.
 
 
 == What you'll need
@@ -35,12 +35,15 @@ include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/
 NOTE: If you read link:/guides/gs/producing-web-service[Producing a SOAP web service], you might be wondering why this guide doesn't use *spring-boot-starter-ws*? That Spring Boot starter is
 only for server-side web services. That starter brings on board things like embedded Tomcat, which isn't need to make a web call.
 
+== Run the target web service locally
+
+Follow the steps in the https://spring.io/guides/gs/producing-web-service/[companion guide], or just clone the https://github.com/spring-guides/gs-producing-web-service[repository] and run the service (e.g. using `mvn spring-boot:run`) from its `complete` directory. You can verify that is working by visiting http://localhost:8080/ws/countries.wsdl in your browser.
 
 [[initial]]
 == Generate domain objects based on a WSDL
 
 The interface to a SOAP web service is captured in a http://en.wikipedia.org/wiki/Web_Services_Description_Language[WSDL]. JAXB provides an easy means to generate Java classes from a WSDL (or rather: the XSD contained in the `<Types/>` section of the WSDL).
-The WSDL for the quote service can be found at http://www.webservicex.com/stockquote.asmx?WSDL.
+The WSDL for the country service can be found at http://localhost:8080/ws/countries.wsdl.
 
 To generate Java classes from the WSDL in maven, you need the following plugin setup:
 
@@ -62,41 +65,41 @@ As gradle does not have a JAXB plugin (yet), it involves an ant task, which make
 
 In both cases, the JAXB domain object generation process has been wired into the build tool's lifecycle so there are no extra steps to run.
 
-== Create a stock market quotes service client
+== Create a country service client
 
 To create a web service client, you simply have to extend the http://docs.spring.io/spring-ws/sites/2.0/apidocs/org/springframework/ws/client/core/support/WebServiceGatewaySupport.html[WebServiceGatewaySupport] class and code your operations:
 
-`src/main/java/hello/QuoteClient.java`
+`src/main/java/hello/CountryClient.java`
 [source,java]
 ----
-include::complete/src/main/java/hello/QuoteClient.java[]
+include::complete/src/main/java/hello/CountryClient.java[]
 ----
 
-The client contains one method: `getQuote` which does the actual SOAP exchange.
+The client contains one method: `getCountry` which does the actual SOAP exchange.
 
-In this method, both the `GetQuote` and the `GetQuoteResponse` classes are derived from the WSDL and were generated in the JAXB generation process described in the previous step.
-It creates the `GetQuote` request object and sets it up with the `ticker` parameter.
-After printing out the ticker code, it uses the http://docs.spring.io/spring-ws/sites/2.0/apidocs/org/springframework/ws/client/core/WebServiceTemplate.html[WebServiceTemplate] supplied by the `WebServiceGatewaySupport` base class to do the actual SOAP exchange.
-It passes the `GetQuote` request object, as well as a `SoapActionCallback` to pass on a http://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528[SOAPAction] header with the request, as the WSDL described that it needed this header in the `<soap:operation/>` elements.
-It casts the response into a `GetQuoteResponse` object, which is then returned.
+In this method, both the `GetCountryRequest` and the `GetCountryResponse` classes are derived from the WSDL and were generated in the JAXB generation process described in the previous step.
+It creates the `GetCountryRequest` request object and sets it up with the `country` parameter (the name of the country).
+After printing out the country name, it uses the http://docs.spring.io/spring-ws/sites/2.0/apidocs/org/springframework/ws/client/core/WebServiceTemplate.html[WebServiceTemplate] supplied by the `WebServiceGatewaySupport` base class to do the actual SOAP exchange.
+It passes the `GetCountryRequest` request object, as well as a `SoapActionCallback` to pass on a http://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528[SOAPAction] header with the request, as the WSDL described that it needed this header in the `<soap:operation/>` elements.
+It casts the response into a `GetCountryResponse` object, which is then returned.
 
 == Configuring web service components
 
 Spring WS uses Spring Framework's OXM module which has the `Jaxb2Marshaller` to serialize and deserialize XML requests.
 
-`src/main/java/hello/QuoteConfiguration.java`
+`src/main/java/hello/CountryConfiguration.java`
 [source,java]
 ----
-include::complete/src/main/java/hello/QuoteConfiguration.java[]
+include::complete/src/main/java/hello/CountryConfiguration.java[]
 ----
 
 The `marshaller` is pointed at the collection of generated domain objects and will use them to both serialize and deserialize between XML and link:/understanding/POJO[POJOs].
 
-The `quoteClient` is created and configured with the URI of the weather service shown up above. It is also configured to use the JAXB marshaller.
+The `countryClient` is created and configured with the URI of the country service shown up above. It is also configured to use the JAXB marshaller.
 
 == Make the application executable
 
-This application is packaged up to run from the console and retrieve the stock value for a given symbol.
+This application is packaged up to run from the console and retrieve the data for a given country name:
 
 `src/main/java/hello/Application.java`
 [source,java]
@@ -104,7 +107,7 @@ This application is packaged up to run from the console and retrieve the stock v
 include::complete/src/main/java/hello/Application.java[]
 ----
 
-The `main()` method defers to the http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html[`SpringApplication`] helper class, providing `QuoteConfiguration.class` as an argument to its `run()` method. This tells Spring to read the annotation metadata from `QuoteConfiguration` and to manage it as a component in the link:/understanding/application-context[Spring application context].
+The `main()` method defers to the http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html[`SpringApplication`] helper class, providing `CountryConfiguration.class` as an argument to its `run()` method. This tells Spring to read the annotation metadata from `CountryConfiguration` and to manage it as a component in the link:/understanding/application-context[Spring application context].
 
 NOTE: This application is hard coded to look up symbol 'MSFT' which correspond to Microsoft Corporation. Towards the end of this guide, you'll see how to plug in a different symbol without editing the code.
 
@@ -116,18 +119,17 @@ include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/
 Logging output is displayed. The service should be up and running within a few seconds.
 
 ```
-Requesting quote for MSFT
+Requesting country data for Spain
 
-<StockQuotes><Stock><Symbol>MSFT</Symbol><Last>62.70</Last>...</StockQuotes>
+<getCountryRequest><name>Spain</name>...</getCountryRequest>
 ```
 
-You can plug in a different ticker by typing `java -jar build/libs/gs-consuming-web-service-0.1.0.jar ORCL`
+You can plug in a different country by typing `java -jar build/libs/gs-consuming-web-service-0.1.0.jar Poland`
 
 ```
-Requesting quote for ORCL
+Requesting location for Poland
 
-<StockQuotes><Stock><Symbol>ORCL</Symbol><Last>39.26</Last>...</StockQuotes>
-
+<getCountryRequest><name>Poland</name>...</getCountryRequest>
 ```
 
 == Summary
