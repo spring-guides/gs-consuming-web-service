@@ -1,18 +1,18 @@
 
-package hello;
+package com.example.consumingwebservice;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import hello.wsdl.GetCountryResponse;
+import com.example.consumingwebservice.wsdl.GetCountryResponse;
 
 @SpringBootApplication
-public class Application {
+public class ConsumingWebServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(ConsumingWebServiceApplication.class, args);
 	}
 
 	@Bean

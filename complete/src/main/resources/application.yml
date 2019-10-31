@@ -1,6 +1,6 @@
 logging:
   level:
-    hello: INFO
+    com.example.consumingwebservice: INFO
     org:
       springframework:
         ws: DEBUG
