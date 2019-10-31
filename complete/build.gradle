@@ -1,84 +1,86 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.0.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+// tag::configurations[]
 configurations {
-    jaxb
+	jaxb
 }
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.6.RELEASE")
-    }
-}
-
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+// end::configurations[]
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 // tag::wsdl[]
 task genJaxb {
-    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
-    ext.classesDir = "${buildDir}/classes/jaxb"
-    ext.schema = "http://localhost:8080/ws/countries.wsdl"
+	ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+	ext.classesDir = "${buildDir}/classes/jaxb"
+	ext.schema = "http://localhost:8080/ws/countries.wsdl"
 
-    outputs.dir classesDir
+	outputs.dir classesDir
 
-    doLast() {
-        project.ant {
-            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
-                    classpath: configurations.jaxb.asPath
-            mkdir(dir: sourcesDir)
-            mkdir(dir: classesDir)
+	doLast() {
+		project.ant {
+			taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+					classpath: configurations.jaxb.asPath
+			mkdir(dir: sourcesDir)
+			mkdir(dir: classesDir)
 
-            xjc(destdir: sourcesDir, schema: schema,
-                    package: "hello.wsdl") {
-                arg(value: "-wsdl")
-                produces(dir: sourcesDir, includes: "**/*.java")
-            }
+				xjc(destdir: sourcesDir, schema: schema,
+						package: "com.example.consumingwebservice.wsdl") {
+						arg(value: "-wsdl")
+					produces(dir: sourcesDir, includes: "**/*.java")
+				}
 
-            javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
-                    debugLevel: "lines,vars,source",
-                    classpath: configurations.jaxb.asPath) {
-                src(path: sourcesDir)
-                include(name: "**/*.java")
-                include(name: "*.java")
-            }
+				javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
+						debugLevel: "lines,vars,source",
+						classpath: configurations.jaxb.asPath) {
+					src(path: sourcesDir)
+					include(name: "**/*.java")
+					include(name: "*.java")
+					}
 
-            copy(todir: classesDir) {
-                fileset(dir: sourcesDir, erroronmissingdir: false) {
-                    exclude(name: "**/*.java")
-                }
-            }
-        }
-    }
+				copy(todir: classesDir) {
+						fileset(dir: sourcesDir, erroronmissingdir: false) {
+						exclude(name: "**/*.java")
+				}
+			}
+		}
+	}
 }
 // end::wsdl[]
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter")
-    compile("org.springframework.ws:spring-ws-core")
-    compile(files(genJaxb.classesDir).builtBy(genJaxb))
+// tag::dependency[]
+	implementation ('org.springframework.boot:spring-boot-starter-web-services') {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+	}
+	implementation 'org.springframework.ws:spring-ws-core'
+	compile(files(genJaxb.classesDir).builtBy(genJaxb))
 
-    jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+// end::dependency[]
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
 }
 
+test {
+	useJUnitPlatform()
+}
+
+// tag::bootjar[]
 bootJar {
-    baseName = 'gs-consuming-web-service'
-    version =  '0.1.0'
+	baseName = 'gs-consuming-web-service'
+	version =  '0.0.1'
 
-    from genJaxb.classesDir
+	from genJaxb.classesDir
 }
-
-
-task afterEclipseImport {
-    dependsOn genJaxb
-}
+// end::bootjar[]
