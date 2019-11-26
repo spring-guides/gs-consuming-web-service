@@ -184,7 +184,7 @@ classes in the `com.example.consumingwebservice.wsdl` package.
 To do the same with Gradle, you will need the following in your build file:
 
 ====
-[source,java,indent=0]
+[source,java,tabsize=2,indent=0]
 ----
 include::complete/build.gradle[tags=wsdl]
 ----
@@ -204,7 +204,7 @@ class and code your operations, as the following example (from
 `src/main/java/com/example/consumingwebservice/CountryClient.java`) shows:
 
 ====
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/com/example/consumingwebservice/CountryClient.java[]
 ----
@@ -232,7 +232,7 @@ and deserialize XML requests, as the following example (from
 `src/main/java/com/example/consumingwebservice/CountryConfiguration.java`) shows:
 
 ====
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/com/example/consumingwebservice/CountryConfiguration.java[]
 ----
@@ -252,7 +252,7 @@ country name, as the following listing (from
 shows:
 
 ====
-[source,java]
+[source,java,tabsize=2]
 ----
 include::complete/src/main/java/com/example/consumingwebservice/ConsumingWebServiceApplication.java[]
 ----
