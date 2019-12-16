@@ -179,7 +179,8 @@ include::complete/pom.xml[tags=wsdl]
 ====
 
 This setup will generate classes for the WSDL found at the specified URL, putting those
-classes in the `com.example.consumingwebservice.wsdl` package.
+classes in the `com.example.consumingwebservice.wsdl` package. To generate that code run `./mvnw compile`
+and then look in `target/generated-sources` if you want to check that it worked.
 
 To do the same with Gradle, you will need the following in your build file:
 
@@ -191,10 +192,11 @@ include::complete/build.gradle[tags=wsdl]
 ====
 
 As Gradle does not (yet) have a JAXB plugin, it involves an Ant task, which makes it a bit
-more complex than in Maven.
+more complex than in Maven. To generate that code run `./gradlew compileJava`
+and then look in `build/generated-sources` if you want to check that it worked.
 
 In both cases, the JAXB domain object generation process has been wired into the build
-tool's lifecycle, so you need not run any extra steps.
+tool's lifecycle, so you need not run any extra steps once you have a successful build.
 
 == Create a Country Service Client
 
