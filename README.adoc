@@ -92,7 +92,7 @@ include::complete/pom.xml[tags=dependency]
 ----
 ====
 
-The following listing shows the profile you need to add in Maven:
+The following listing shows the profile you need to add in Maven if you want it to work with Java 11:
 
 ====
 [source,xml,indent=0]
@@ -100,8 +100,6 @@ The following listing shows the profile you need to add in Maven:
 include::complete/pom.xml[tags=profile]
 ----
 ====
-
-Note that the profile also lets this guide work with Java 11.
 
 The <<initial>> section describes the WSDL generation plugin.
 
