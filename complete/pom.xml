@@ -6,7 +6,8 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.0.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>consuming-web-service</artifactId>
@@ -23,7 +24,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-		<!-- tag::dependency -->
+		<!-- tag::dependency[] -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web-services</artifactId>
@@ -34,7 +35,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- end::dependency -->
+		<!-- end::dependency[] -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -49,7 +50,7 @@
 		</dependency>
 	</dependencies>
 
-	<!-- tag::profile -->
+	<!-- tag::profile[] -->
 	<profiles>
 		<profile>
 			<id>java11</id>
@@ -65,7 +66,7 @@
 			</dependencies>
 		</profile>
 	</profiles>
-	<!-- end::profile -->
+	<!-- end::profile[] -->
 
 	<build>
 		<plugins>

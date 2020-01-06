@@ -131,15 +131,6 @@ include::complete/build.gradle[tags=dependency]
 Note the exclusion of Tomcat. If Tomcat is allowed to run in this build, you get a port
 collision with the Tomcat instance that provides the country data.
 
-The following listing shows the configuration you need to add in Gradle:
-
-====
-[source,xml,indent=0]
-----
-include::complete/build.gradle[tags=configuration]
-----
-====
-
 The following listing shows the `bootJar` section you need to add in Gradle:
 
 ====
