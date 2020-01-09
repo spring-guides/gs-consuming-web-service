@@ -24,14 +24,14 @@ rm -rf build
 
 cd ../initial
 
-mvn clean compile
+mvn clean spring-boot:run
 ret=$?
 if [ $ret -ne 0 ]; then
 exit $ret
 fi
 rm -rf target
 
-./gradlew compileJava
+./gradlew bootRun
 ret=$?
 if [ $ret -ne 0 ]; then
 exit $ret

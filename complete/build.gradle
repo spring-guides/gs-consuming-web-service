@@ -63,6 +63,8 @@ dependencies {
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
 	}
 	implementation 'org.springframework.ws:spring-ws-core'
+	// For Java 11:
+	implementation 'org.glassfish.jaxb:jaxb-runtime'
 	compile(files(genJaxb.classesDir).builtBy(genJaxb))
 
 	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
