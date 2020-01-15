@@ -82,7 +82,5 @@ test {
 bootJar {
 	baseName = 'gs-consuming-web-service'
 	version =  '0.0.1'
-
-	from genJaxb.classesDir
 }
 // end::bootjar[]
