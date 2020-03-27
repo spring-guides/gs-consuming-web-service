@@ -37,7 +37,7 @@ https://spring.io/guides/gs/producing-web-service/[companion guide] or clone the
 https://github.com/spring-guides/gs-producing-web-service[repository] and run the service
 (for example, by using `mvn spring-boot:run`) from its `complete` directory. You can
 verify that it works by visiting `http://localhost:8080/ws/countries.wsdl` in your
-browser.
+browser. If you don't do this you will see a confusing exception in your build later from the JAXB tooling.
 
 [[scratch]]
 == Starting with Spring Initializr
