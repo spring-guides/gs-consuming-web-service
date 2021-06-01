@@ -1,9 +1,0 @@
-sudo: false
-language: java
-jdk:
-- openjdk8
-script:
-- test/run.sh
-notifications:
-  slack:
-    secure: M3ZUXA5omZ1zhSjf4m2vj1SONgtIpnCQ/5S0e3aTj2aj9iTAyCLLzmQxcjoIoCMb04rayEjxBOskK6lqxz2CAmH7XhWV/EYqz2MF2ivyWgYnKO9OtoZ2UzUneUTo4nyQqH5U9UgbuiIM/M//sY42ewFa66d1cRGJ0mFkl/BXsbY=
