@@ -11,7 +11,7 @@ Spring.
 
 == What You Will Build
 
-You will build a client that fetches country data data from a remote, WSDL-based web
+You will build a client that fetches country data from a remote, WSDL-based web
 service by using http://en.wikipedia.org/wiki/SOAP[SOAP].
 You can find out more about the country service and run the service yourself by following
 https://spring.io/guides/gs/producing-web-service/[this guide].
