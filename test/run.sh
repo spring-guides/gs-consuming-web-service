@@ -8,7 +8,7 @@ sleep 10
 
 cd ../complete
 
-mvn clean package
+./mvnw clean package
 ret=$?
 if [ $ret -ne 0 ]; then
 exit $ret
@@ -24,7 +24,7 @@ rm -rf build
 
 cd ../initial
 
-mvn clean spring-boot:run
+./mvnw clean spring-boot:run
 ret=$?
 if [ $ret -ne 0 ]; then
 exit $ret
