@@ -11,10 +11,26 @@ pipeline {
 	}
 
 	stages {
+		stage('Publish OpenJDK 8 + git') {
+			when {
+				changeset "ci/Dockerfile"
+			}
+			agent any
+
+			steps {
+				script {
+					def image = docker.build("springci/gs-consuming-web-service-and-git", "ci/")
+					docker.withRegistry('', 'hub.docker.com-springbuildmaster') {
+						image.push()
+					}
+				}
+			}
+		}
+
 		stage("test: baseline (jdk8)") {
 			agent {
 				docker {
-					image 'adoptopenjdk/openjdk8:latest'
+					image 'springci/gs-consuming-web-service-and-git:latest'
 					args '-v $HOME/.m2:/tmp/jenkins-home/.m2'
 				}
 			}
