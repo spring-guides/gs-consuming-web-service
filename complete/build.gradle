@@ -22,7 +22,7 @@ repositories {
 task genJaxb {
 	ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
 	ext.classesDir = "${buildDir}/classes/jaxb"
-	ext.schema = "http://localhost:8080/ws/countries.wsdl"
+	ext.schema = "localhost:8080/ws/countries.wsdl"
 
 	outputs.dir classesDir
 

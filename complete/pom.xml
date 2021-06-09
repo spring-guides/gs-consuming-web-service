@@ -91,7 +91,7 @@
 						<generatePackage>com.example.consumingwebservice.wsdl</generatePackage>
 						<schemas>
 							<schema>
-								<url>http://localhost:8080/ws/countries.wsdl</url>
+								<url>localhost:8080/ws/countries.wsdl</url>
 							</schema>
 						</schemas>
 					</configuration>
