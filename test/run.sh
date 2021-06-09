@@ -1,6 +1,6 @@
 #!/bin/sh
-cd $(dirname $0)
 
+cd /tmp
 git clone https://github.com/spring-guides/gs-producing-web-service
 (cd gs-producing-web-service/complete; ./mvnw clean install spring-boot:run &)
 
