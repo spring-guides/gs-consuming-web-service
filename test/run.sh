@@ -1,12 +1,19 @@
 #!/bin/sh
 
-cd /tmp
-git clone https://github.com/spring-guides/gs-producing-web-service
-(cd gs-producing-web-service/complete; ./mvnw clean install spring-boot:run &)
+# The following lines do not work. Start gs-producing-web-service in
+# a separate terminal window and then run this test script.
 
-sleep 10
+#cwd=$(pwd)
 
-cd ../complete
+#cd /tmp
+#git clone https://github.com/spring-guides/gs-producing-web-service
+#(cd gs-producing-web-service/complete; ./mvnw clean install spring-boot:run &)
+
+#sleep 10
+
+#cd $cwd
+
+cd complete
 
 ./mvnw clean package
 ret=$?
