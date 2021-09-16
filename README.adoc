@@ -45,25 +45,20 @@ browser. If you don't do this you will see a confusing exception in your build l
 For all Spring applications, you should start with the https://start.spring.io[Spring
 Initializr]. The Initializr offers a fast way to pull in all the dependencies you need for
 an application and does a lot of the setup for you. This example needs only the Spring Web
-Services dependency. 
+Services dependency.
 
-The following listing shows the `pom.xml` file that is created when you choose Maven:
+To initialize the project:
 
-====
-[source,xml]
-----
-include::initial/pom.xml[]
-----
-====
+. Navigate to https://start.spring.io.
+This service pulls in all the dependencies you need for an application and does most of the setup for you.
+. Choose either Gradle or Maven and the language you want to use. This guide assumes that you chose Java.
+. Click *Dependencies* and select *Spring Web Services*.
+. Click *Generate*.
+. Download the resulting ZIP file, which is an archive of a web application that is configured with your choices.
 
-The following listing shows the `build.gradle` file that is created when you choose Gradle:
+NOTE: If your IDE has the Spring Initializr integration, you can complete this process from your IDE.
 
-====
-[source,text]
-----
-include::initial/build.gradle[]
-----
-====
+NOTE: You can also fork the project from Github and open it in your IDE or other editor.
 
 == Modify the Build Files
 
