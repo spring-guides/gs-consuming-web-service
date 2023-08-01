@@ -20,15 +20,10 @@ The service provides country data. You will be able to query data about a countr
 
 == What You Need
 
-:java_version: 1.8
+:java_version: 17
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/prereq_editor_jdk_buildtools.adoc[]
 
 include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/main/how_to_complete_this_guide.adoc[]
-
-NOTE: If you read link:/guides/gs/producing-web-service[Producing a SOAP web service], you
-might wonder why this guide does not use `spring-boot-starter-ws`? That Spring Boot
-starter is only for server-side web services. That starter brings on board such things as
-embedded Tomcat, which is not needed to make a web call.
 
 == Run the Target Web Service Locally
 
@@ -76,15 +71,6 @@ The following listing shows the dependency you need to add in Maven:
 [source,xml,indent=0]
 ----
 include::complete/pom.xml[tags=dependency]
-----
-====
-
-The following listing shows the profile you need to add in Maven if you want it to work with Java 11:
-
-====
-[source,xml,indent=0]
-----
-include::complete/pom.xml[tags=profile]
 ----
 ====
 
