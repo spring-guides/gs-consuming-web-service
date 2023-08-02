@@ -32,7 +32,7 @@ https://spring.io/guides/gs/producing-web-service/[companion guide] or clone the
 https://github.com/spring-guides/gs-producing-web-service[repository] and run the service
 (for example, by using `mvn spring-boot:run`) from its `complete` directory. You can
 verify that it works by visiting `http://localhost:8080/ws/countries.wsdl` in your
-browser. If you don't do this you will see a confusing exception in your build later from the JAXB tooling.
+browser. If you do not do so, you will see a confusing exception in your build later from the JAXB tooling.
 
 [[scratch]]
 == Starting with Spring Initializr
@@ -41,6 +41,8 @@ For all Spring applications, you should start with the https://start.spring.io[S
 Initializr]. The Initializr offers a fast way to pull in all the dependencies you need for
 an application and does a lot of the setup for you. This example needs only the Spring Web
 Services dependency.
+
+You can use this https://start.spring.io/#!type=maven-project&language=java&&packaging=jar&jvmVersion=17&groupId=com.example&artifactId=consuming-web-service&name=consuming-web-service&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.consuming-web-service&dependencies=web-services[pre-initialized project] and click Generate to download a ZIP file. This project is configured to fit the examples in this tutorial.
 
 To initialize the project:
 
@@ -102,14 +104,10 @@ include::complete/build.gradle[tags=dependency]
 Note the exclusion of Tomcat. If Tomcat is allowed to run in this build, you get a port
 collision with the Tomcat instance that provides the country data.
 
-The following listing shows the `bootJar` section you need to add in Gradle:
-
-====
-[source,xml,indent=0]
-----
-include::complete/build.gradle[tags=bootjar]
-----
-====
+NOTE: Due to this port collision, the initial project fails to start.
+You can fix it by adding an `application.properties` file with a single property of
+`server.port=8081`. Since the initial project exists to be a starting point, you
+can skip trying to get it to run.
 
 The <<initial>> section describes the WSDL generation plugin.
 
@@ -140,11 +138,11 @@ include::complete/pom.xml[tags=wsdl]
 ----
 ====
 
-This setup will generate classes for the WSDL found at the specified URL, putting those
-classes in the `com.example.consumingwebservice.wsdl` package. To generate that code run `./mvnw compile`
+This setup generates classes for the WSDL found at the specified URL, putting those
+classes in the `com.example.consumingwebservice.wsdl` package. To generate that code run, `./mvnw compile`
 and then look in `target/generated-sources` if you want to check that it worked.
 
-To do the same with Gradle, you will need the following in your build file:
+To do the same with Gradle, you need the following in your build file:
 
 ====
 [source,java,tabsize=2,indent=0]
@@ -157,7 +155,7 @@ As Gradle does not (yet) have a JAXB plugin, it involves an Ant task, which make
 more complex than in Maven. To generate that code run `./gradlew compileJava`
 and then look in `build/generated-sources` if you want to check that it worked.
 
-In both cases, the JAXB domain object generation process has been wired into the build
+In both Maven and Gradle, the JAXB domain object generation process has been wired into the build
 tool's lifecycle, so you need not run any extra steps once you have a successful build.
 
 == Create a Country Service Client
