@@ -1,16 +1,19 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.1'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'org.springframework.boot' version '3.1.2'
+	id 'io.spring.dependency-management' version '1.1.2'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+java {
+	sourceCompatibility = '17'
+}
+ext.jaxwsSourceDir = "${buildDir}/generated/sources/jaxws"
 
 // tag::configurations[]
 configurations {
-	jaxb
+	jaxws
 }
 // end::configurations[]
 
@@ -19,41 +22,38 @@ repositories {
 }
 
 // tag::wsdl[]
-task genJaxb {
-	ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
-	ext.classesDir = "${buildDir}/classes/jaxb"
-	ext.schema = "http://localhost:8080/ws/countries.wsdl"
+task wsimport {
+	description = 'Generate classes from wsdl using wsimport'
 
-	outputs.dir classesDir
-
-	doLast() {
-		project.ant {
-			taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
-					classpath: configurations.jaxb.asPath
-			mkdir(dir: sourcesDir)
-			mkdir(dir: classesDir)
-
-				xjc(destdir: sourcesDir, schema: schema,
-						package: "com.example.consumingwebservice.wsdl") {
-						arg(value: "-wsdl")
-					produces(dir: sourcesDir, includes: "**/*.java")
-				}
-
-				javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
-						debugLevel: "lines,vars,source",
-						classpath: configurations.jaxb.asPath) {
-					src(path: sourcesDir)
-					include(name: "**/*.java")
-					include(name: "*.java")
-					}
-
-				copy(todir: classesDir) {
-						fileset(dir: sourcesDir, erroronmissingdir: false) {
-						exclude(name: "**/*.java")
-				}
+	doLast {
+		project.mkdir(jaxwsSourceDir)
+		ant {
+			taskdef(name: 'wsimport',
+					classname: 'com.sun.tools.ws.ant.WsImport',
+					classpath: configurations.jaxws.asPath
+			)
+			wsimport(
+					keep: true,
+					destdir: jaxwsSourceDir,
+					extension: "true",
+					verbose: true,
+					wsdl: "http://localhost:8080/ws/countries.wsdl",
+					xnocompile: true,
+					package: "com.example.consumingwebservice.wsdl") {
+				xjcarg(value: "-XautoNameResolution")
 			}
 		}
 	}
+}
+
+sourceSets {
+	main {
+		java.srcDirs += jaxwsSourceDir
+	}
+}
+
+compileJava {
+	dependsOn wsimport
 }
 // end::wsdl[]
 
@@ -62,23 +62,15 @@ dependencies {
 	implementation ('org.springframework.boot:spring-boot-starter-web-services') {
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
 	}
-	implementation 'org.springframework.ws:spring-ws-core'
-	// For Java 11:
-	implementation 'org.glassfish.jaxb:jaxb-runtime'
-	implementation(files(genJaxb.classesDir).builtBy(genJaxb))
-
-	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+	jaxws 'com.sun.xml.ws:jaxws-tools:3.0.0',
+			'jakarta.xml.ws:jakarta.xml.ws-api:3.0.0',
+			'jakarta.xml.bind:jakarta.xml.bind-api:3.0.0',
+			'jakarta.activation:jakarta.activation-api:2.0.0',
+			'com.sun.xml.ws:jaxws-rt:3.0.0'
 // end::dependency[]
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
-test {
+tasks.named('test') {
 	useJUnitPlatform()
 }
-
-// tag::bootjar[]
-bootJar {
-	baseName = 'gs-consuming-web-service'
-	version =  '0.0.1'
-}
-// end::bootjar[]
