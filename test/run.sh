@@ -15,7 +15,7 @@
 
 cd complete
 
-./mvnw clean package
+./mvnw spring-boot:run
 ret=$?
 if [ $ret -ne 0 ]; then
 exit $ret
@@ -31,7 +31,7 @@ rm -rf build
 
 cd ../initial
 
-./mvnw clean spring-boot:run
+./mvnw clean package
 ret=$?
 if [ $ret -ne 0 ]; then
 exit $ret
