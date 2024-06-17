@@ -68,7 +68,6 @@ For Maven, you need to add a dependency, a profile, and a WSDL generation plugin
 The following listing shows the dependency you need to add in Maven:
 
 ====
-[source,xml,indent=0]
 ----
 include::complete/pom.xml[tags=dependency]
 ----
@@ -79,7 +78,6 @@ The <<initial>> section describes the WSDL generation plugin.
 The following listing shows the final `pom.xml` file:
 
 ====
-[source,xml,indent=0]
 ----
 include::complete/pom.xml[]
 ----
