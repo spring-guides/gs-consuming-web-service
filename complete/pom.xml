@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.0</version>
+		<version>4.0.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -22,21 +22,21 @@
 		<!-- tag::dependency[] -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web-services</artifactId>
+			<artifactId>spring-boot-starter-webservices</artifactId>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
+					<artifactId>spring-boot-starter-webmvc</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- end::dependency[] -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- end::dependency[] -->
 	</dependencies>
 
 	<build>
@@ -49,7 +49,7 @@
 			<plugin>
 				<groupId>com.sun.xml.ws</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>4.0.3</version>
 				<executions>
 					<execution>
 						<goals>
@@ -60,7 +60,7 @@
 				<configuration>
 					<packageName>com.example.consumingwebservice.wsdl</packageName>
 					<wsdlUrls>
-						<wsdlUrl>http://localhost:8080/ws/countries.wsdl</wsdlUrl>
+						<wsdlUrl>http://localhost:8080/services/countries.wsdl</wsdlUrl>
 					</wsdlUrls>
 					<sourceDestDir>${sourcesDir}</sourceDestDir>
 					<destDir>${classesDir}</destDir>

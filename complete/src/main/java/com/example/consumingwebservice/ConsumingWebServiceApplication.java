@@ -1,30 +1,33 @@
 
 package com.example.consumingwebservice;
 
-import org.springframework.boot.CommandLineRunner;
+import java.util.List;
+
+import com.example.consumingwebservice.wsdl.GetCountryResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.example.consumingwebservice.wsdl.GetCountryResponse;
-
 @SpringBootApplication
 public class ConsumingWebServiceApplication {
+
+	Logger logger = LoggerFactory.getLogger(ConsumingWebServiceApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConsumingWebServiceApplication.class, args);
 	}
 
 	@Bean
-	CommandLineRunner lookup(CountryClient countryClient) {
+	ApplicationRunner lookup(CountryClient countryClient) {
 		return args -> {
-			String country = "Spain";
-
-			if (args.length > 0) {
-				country = args[0];
-			}
+			List<String> countryOption = args.getOptionValues("country");
+			String country = (countryOption == null || countryOption.isEmpty()) ? "Spain" : countryOption.get(0);
 			GetCountryResponse response = countryClient.getCountry(country);
-			System.err.println(response.getCountry().getCurrency());
+			logger.info("Country [%s] has currency [%s].".formatted(country, response.getCountry().getCurrency()));
 		};
 	}
 

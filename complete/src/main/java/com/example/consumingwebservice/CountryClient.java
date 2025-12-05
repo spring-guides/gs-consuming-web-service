@@ -1,4 +1,3 @@
-
 package com.example.consumingwebservice;
 
 import org.slf4j.Logger;
@@ -22,9 +21,9 @@ public class CountryClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		GetCountryResponse response = (GetCountryResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8080/ws/countries", request,
+				.marshalSendAndReceive("http://localhost:8080/services/countries", request,
 						new SoapActionCallback(
-								"http://spring.io/guides/gs-producing-web-service/GetCountryRequest"));
+								"https://spring.io/guides/gs-producing-web-service/GetCountryRequest"));
 
 		return response;
 	}
