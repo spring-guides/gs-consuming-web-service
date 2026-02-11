@@ -13,11 +13,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>consuming-web-service-complete</name>
 	<description>Demo project for Spring Boot</description>
-
 	<properties>
 		<java.version>17</java.version>
 	</properties>
-
 	<dependencies>
 		<!-- tag::dependency[] -->
 		<dependency>
@@ -30,13 +28,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- end::dependency[] -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
+			<artifactId>spring-boot-starter-webservices-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- end::dependency[] -->
 	</dependencies>
 
 	<build>
@@ -58,13 +56,8 @@
 					</execution>
 				</executions>
 				<configuration>
+					<wsdlDirectory>${basedir}/src/main/wsdl</wsdlDirectory>
 					<packageName>com.example.consumingwebservice.wsdl</packageName>
-					<wsdlUrls>
-						<wsdlUrl>http://localhost:8080/services/countries.wsdl</wsdlUrl>
-					</wsdlUrls>
-					<sourceDestDir>${sourcesDir}</sourceDestDir>
-					<destDir>${classesDir}</destDir>
-					<extension>true</extension>
 				</configuration>
 			</plugin>
 			<!-- end::wsdl[] -->

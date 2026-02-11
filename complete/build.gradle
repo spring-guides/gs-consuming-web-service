@@ -1,11 +1,11 @@
-// tag::plugin[]
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.0.0'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id 'uk.co.boothen.gradle.wsimport' version '0.25' // add the wsimport plugin
+	// tag::plugin[]
+	id 'uk.co.boothen.gradle.wsimport' version '0.25'
+	// end::plugin[]
 }
-// end::plugin[]
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -22,8 +22,7 @@ repositories {
 
 // tag::wsdl[]
 wsimport {
-	wsdlSourceRoot = "http://localhost:8080/services/"
-
+	wsdlSourceRoot = "/src/main/wsdl"
 	wsdl ("countries.wsdl") {
 		packageName("com.example.consumingwebservice.wsdl")
 		xjcarg("-XautoNameResolution")
@@ -31,15 +30,16 @@ wsimport {
 }
 // end::wsdl[]
 
-// tag::dependency[]
 dependencies {
+	// tag::dependency[]
 	implementation ('org.springframework.boot:spring-boot-starter-webservices') {
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-webmvc'
 	}
+	// end::dependency[]
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation 'org.springframework.boot:spring-boot-starter-webservices-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
-// end::dependency[]
 
 tasks.named('test') {
 	useJUnitPlatform()
